@@ -9,7 +9,7 @@ from discord.ext import commands
 import viking_text
 
 # NEVER share this to the public
-token = "NDg0MDg0NzQxMjM1MDE1NzEw.DmnYxw.DY3d3YXb1adFDFck2ic1dCTCLDY"
+token = "DISCORD_BOT_TOKEN"
 
 link_file = 'poll_link.txt'
 
