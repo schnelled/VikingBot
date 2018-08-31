@@ -56,14 +56,13 @@ async def ping(ctx):
 # Help command
 @bot.command(pass_context=True)
 async def help(ctx):
-    await bot.send_message(ctx.message.channel, viking_utils.help(ctx.message.author.top_role))
+    await bot.send_message(ctx.message.author, viking_utils.help(ctx.message.author.top_role))
 
 # Provide information about the club
 @bot.command(pass_context=True)
 async def about(ctx):
     embed = viking_utils.info_text()
-    await bot.send_message(ctx.message.channel, embed=embed)
-
+    await bot.send_message(ctx.message.author, embed=embed)
 
 #=======================================
 # Admin Commands - Only server Admins can use these commands
