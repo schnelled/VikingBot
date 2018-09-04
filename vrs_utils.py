@@ -33,7 +33,7 @@ def help(role):
 
 # Information about the bot
 def about():
-    text = vrs_text.about.format(vrs_text.bot_repo)
+    text = vrs_text.about.format(vrs_text.bot_repo,vrs_text.bot_version)
     return text
 
 # Get link for Availaibility poll (stored in local text file)

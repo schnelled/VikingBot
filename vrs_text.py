@@ -4,6 +4,7 @@
 # =====================
 # String variables needed for Viking Bot
 
+bot_version = "2018-09-04"
 
 welcome_text = "Welcome to the Discord Server for Viking Robotics Society at Portland State University\n\
                 Our group welcomes people of the community and students of any major to join us in learning robotics.\n\
@@ -15,7 +16,7 @@ welcome_text = "Welcome to the Discord Server for Viking Robotics Society at Por
                 Get our general information from Viking bot with the following command: ```$about```\n\
                 Thanks for joining us on our chat server and we hope to see you around the lab!"
 
-about = "I was made by Chana for the Viking Robotics Society at Portland State University. You can find my [source code on Github]({})"
+about = "I was made by Chana for the Viking Robotics Society at Portland State University. You can find my [source code on Github]({}) --- Version {}"
 bot_repo  = "https://github.com/pdx-robotics/VikingBot"
 
 #=======================================
