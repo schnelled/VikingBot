@@ -3,6 +3,6 @@ This bot will be used to assist officers in managing resource for the club throu
 
 ### Version History
 
-2018-09-04 
-Changed $about to provide information about bot and it's version.
-Added $info to provide information about Viking Robotics Society
+2018-09-04\
+Changed $about to provide information about bot and it's version\
+Added $info to provide information about Viking Robotics Society\
