@@ -4,20 +4,44 @@
 # =====================
 # String variables needed for Viking Bot
 
-bot_version = "2018-09-04"
+
+ASCII_ART = " __      ___ _    _                      \n\
+ \ \    / (_) |  (_)                      \n\
+  \ \  / / _| | ___ _ __   __ _           \n\
+   \ \/ / | | |/ / | '_ \ / _` |          \n\
+    \  /  | |   <| | | | | (_| |          \n\
+     \/   |_|_|\_\_|_| |_|\__, |          \n\
+                           __/ |          \n\
+  _____       _           |___/           \n\
+ |  __ \     | |         | | (_)          \n\
+ | |__) |___ | |__   ___ | |_ _  ___ ___  \n\
+ |  _  // _ \| '_ \ / _ \| __| |/ __/ __| \n\
+ | | \ \ (_) | |_) | (_) | |_| | (__\__ \ \n\
+ |_|__\_\___/|_.__/ \___/ \__|_|\___|___/ \n\
+  / ____|          (_)    | |             \n\
+ | (___   ___   ___ _  ___| |_ _   _      \n\
+  \___ \ / _ \ / __| |/ _ \ __| | | |     \n\
+  ____) | (_) | (__| |  __/ |_| |_| |     \n\
+ |_____/ \___/ \___|_|\___|\__|\__, |     \n\
+                                __/ |     \n\
+                               |___/      "
+
+#=======================================
+# Other text
+#=======================================
+bot_version = "2018-09-05"
 
 welcome_text = "Welcome to the Discord Server for Viking Robotics Society at Portland State University\n\
-                Our group welcomes people of the community and students of any major to join us in learning robotics.\n\
-                \n\
-                Please change your nickname to your real name so we can identify people on the server.\n\
-                If we haven't seen you at our meetings yet, be sure to stop by so we know who you are.\
-                You can ask about when our meetings are in #lobby.\n\
-                \n\
-                Get our general information from Viking bot with the following command: ```$about```\n\
-                Thanks for joining us on our chat server and we hope to see you around the lab!"
+Our group welcomes people of the community and students of any major to join us in learning robotics.\n\
+\n\
+Please change your nickname to your real name so we can identify people on the server.\n\
+If we haven't seen you at our meetings yet, be sure to stop by so we know who you are.\
+You can ask about when our meetings are in #lobby.\n\
+\n\
+Get our general information from Viking Bot with the following command: ```$info```\n\
+Thanks for joining us on our chat server and we hope to see you around the lab!"
 
-about = "I was made by Chana for the Viking Robotics Society at Portland State University. You can find my [source code on Github]({}) --- Version {}"
-bot_repo  = "https://github.com/pdx-robotics/VikingBot"
+about = "(Version {}) --- I was made by Chana for the Viking Robotics Society at Portland State University. You can find my source code at https://github.com/pdx-robotics/VikingBot"
 
 #=======================================
 # Discord Embed Text - About the Society
@@ -48,7 +72,8 @@ commands_header = "========__Viking Bot Commands__========\n"
 code_mark = "```"
 
 help_text = "$help  ==> Shows this message\n\
-$about ==> Get information about Viking Robotics Society\n"
+$about ==> Get information about Viking Bot\n\
+$info  ==> Get information about Viking Robotics Society\n"
 
 commands_admin = "\n========__Admin Commands__========\n\
 $linkupdate <new_link> \n==> Update Availability Poll link stored by Viking Bot. Link must start with http\n"

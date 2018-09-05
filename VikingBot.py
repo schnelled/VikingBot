@@ -11,20 +11,22 @@ from discord.ext.commands import bot
 
 import vrs_utils
 import vrs_text
+import vrs_ids
 
-# NEVER share this with the public. This is access to your Discord App/bot
-token = vrs_utils.token
-
+vrs_utils.setup() # sets up logging of errors and print statements
 bot = commands.Bot(command_prefix='$')
 bot.remove_command('help') # remove default help command
 
+print("\n------\n")
+print(vrs_text.ASCII_ART)
+print("\n------\n")
 print("\nDiscord version: {}".format(discord.__version__))
 print("\n------\n")
 
 # Bot is ready for Discord
 @bot.event
 async def on_ready():
-    print("Let's bulid some robots!")
+    print("Let's build some robots!")
     print("I am running on "+ bot.user.name)
     print("With the ID: "+ bot.user.id)
     print("\n------\n")
@@ -32,10 +34,8 @@ async def on_ready():
 # When someone joins the server
 @bot.event
 async def on_member_join(member):
-    print("\n{} joined the server".format(member.name))
-    print("First time the joined this server is: {}".format(member.joined_at))
-
-    # Future implementation: message upon joining server
+    print("\n{} joined the server!".format(member.name))
+    print("First time they joined this server was: {}".format(member.joined_at))
     await bot.send_message(member, vrs_text.welcome_text)
 
 #=======================================
@@ -49,7 +49,7 @@ async def ping(ctx):
 # Help command
 @bot.command(pass_context=True)
 async def help(ctx):
-    await bot.send_message(ctx.message.author, vrs_utils.help(ctx.message.author.top_role))
+    await bot.send_message(ctx.message.author, vrs_utils.help())
 
 # Information about the bot itself
 @bot.command(pass_context=True)
@@ -72,4 +72,4 @@ async def linkupdate(ctx, new_link):
     vrs_utils.update_poll_link(new_link)
     await bot.send_message(ctx.message.author, "You updated the availability poll link to {}".format(new_link))
 
-bot.run(token)
+bot.run(vrs_ids.TOKEN_VIKINGBOT)
