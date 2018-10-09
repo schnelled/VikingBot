@@ -31,12 +31,14 @@ async def on_ready():
     print("With the ID: "+ bot.user.id)
     print("\n------\n")
 
-# When someone joins the server
+# Greet people when they join the server
 @bot.event
 async def on_member_join(member):
     print("\n{} joined the server!".format(member.name))
     print("First time they joined this server was: {}".format(member.joined_at))
-    await bot.send_message(member, vrs_text.welcome_text)
+
+    channel_info = bot.get_channel(vrs_ids.ID_TEXT_GENERAL_INFO)
+    await bot.send_message(vrs_ids.ID_TEXT_LOBBY, vrs_text.welcome_text.format(member.mention,channel_info.mention))
 
 #=======================================
 # General Commands - anyone can use these commands
@@ -44,7 +46,7 @@ async def on_member_join(member):
 # Ping command
 @bot.command(pass_context=True)
 async def ping(ctx):
-    await bot.say(":ping_pong: pong! =D")
+    await bot.say(":ping_pong: {} pong! =D".format(ctx.message.author.mention))
 
 # Help command
 @bot.command(pass_context=True)
@@ -67,9 +69,8 @@ async def info(ctx):
 #=======================================
 # Update Availability poll link
 @bot.command(pass_context=True)
-@commands.has_role('Admin')
 async def linkupdate(ctx, new_link):
     vrs_utils.update_poll_link(new_link)
     await bot.send_message(ctx.message.author, "You updated the availability poll link to {}".format(new_link))
 
-bot.run(vrs_ids.TOKEN_VIKINGBOT)
+bot.run(vrs_ids.TOKEN_TESTBOT)

@@ -31,15 +31,13 @@ ASCII_ART = " __      ___ _    _                      \n\
 #=======================================
 bot_version = "2018-09-05"
 
-welcome_text = "Welcome to the Discord Server for Viking Robotics Society at Portland State University\n\
+# First bracket should be a mention for the joining user. Second bracket should be text channel mention.
+welcome_text = "Welcome {} to the Discord Server for Viking Robotics Society at Portland State University\n\
 Our group welcomes people of the community and students of any major to join us in learning robotics.\n\
 \n\
 Please change your nickname to your real name so we can identify people on the server.\n\
 If we haven't seen you at our meetings yet, be sure to stop by so we know who you are.\
-You can ask about when our meetings are in #lobby.\n\
-\n\
-Get our general information from Viking Bot with the following command: ```$info```\n\
-Thanks for joining us on our chat server and we hope to see you around the lab!"
+See our {} channel for more information, or ask for help in this channel and we'll get back to you."
 
 about = "(Version {}) --- I was made by Chana for the Viking Robotics Society at Portland State University. You can find my source code at https://github.com/pdx-robotics/VikingBot"
 
