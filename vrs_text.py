@@ -29,7 +29,7 @@ ASCII_ART = " __      ___ _    _                      \n\
 #=======================================
 # Other text
 #=======================================
-bot_version = "2018-09-05"
+bot_version = "2018-10-09"
 
 # First bracket should be a mention for the joining user. Second bracket should be text channel mention.
 welcome_text = "Welcome {} to the Discord Server for Viking Robotics Society at Portland State University\n\
@@ -53,13 +53,12 @@ website = "http://robotics.ece.pdx.edu"
 vrs_join = "Here's how you can join us formally:\n\
             (1) Let us know more about you by filling out the [New Membership Form](https://goo.gl/forms/AUXMLsyf38IpIoJW2)\n\
             (2) Join us on [Orgsync](https://orgsync.com/85238/chapter)\n\
-            (3) Participate in our [Weekly Availability Poll]({}) so we can schedule meetings around everyone's schedule.\n"
+            (3) Participate in our [Weekly Availability Poll for {}]({}) so we can schedule meetings around everyone's schedule.\n"
 
 vrs_location = "Portland State University - Intelligent Robotics Lab (FAB70-09)"
 
 resources = "Viking Robotics [Github](https://github.com/pdx-robotics)\n\
-            Website for our [3D Printer](http://roboprint.cecs.pdx.edu/)\n\
-            Viking Robotics [Google Drive](https://goo.gl/hjEy5e)"
+            Website for our [3D Printer](http://roboprint.cecs.pdx.edu/)"
 
 
 #=======================================

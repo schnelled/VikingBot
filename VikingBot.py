@@ -48,10 +48,10 @@ async def on_member_join(member):
 async def ping(ctx):
     await bot.say(":ping_pong: {} pong! =D".format(ctx.message.author.mention))
 
-# Help command
+# Display commands supported by this bot
 @bot.command(pass_context=True)
 async def help(ctx):
-    await bot.send_message(ctx.message.author, vrs_utils.help())
+    await bot.send_message(ctx.message.channel, vrs_utils.help())
 
 # Information about the bot itself
 @bot.command(pass_context=True)
@@ -62,15 +62,39 @@ async def about(ctx):
 @bot.command(pass_context=True)
 async def info(ctx):
     embed = vrs_utils.info_text()
-    await bot.send_message(ctx.message.author, embed=embed)
+    await bot.send_message(ctx.message.channel, embed=embed)
+
+# Deletes two messages from the channel at a time
+#@bot.command(pass_context=True)
+#async def clear(ctx):
+#    msgs = []
+#    async for x in bot.logs_from(ctx.message.channel, limit=2):
+#        msgs.append(x)
+#    await bot.delete_messages(msgs)
+
 
 #=======================================
 # Admin Commands - Only server Admins can use these commands
 #=======================================
 # Update Availability poll link
 @bot.command(pass_context=True)
-async def linkupdate(ctx, new_link):
-    vrs_utils.update_poll_link(new_link)
-    await bot.send_message(ctx.message.author, "You updated the availability poll link to {}".format(new_link))
+async def linkupdate(ctx, poll_name, new_link):
+    # Update Availability poll link
+    vrs_utils.update_poll_link(poll_name, new_link)
+    await bot.send_message(ctx.message.author, "You updated the availability poll link to [{}]({})".format(poll_name,new_link))
+    
+    # Remove old general info and replace with newer one using new poll link
+    msgs = []
+    channel_info = bot.get_channel(vrs_ids.ID_TEXT_INFO)
+    if channel_info == None:
+        print("Couldn't find channel with ID {}".format(vrs_ids.ID_TEXT_INFO))
+    else:
+        async for x in bot.logs_from(channel_info, limit=2):
+            msgs.append(x)
+        await bot.delete_messages(msgs) 
+
+        embed = vrs_utils.info_text()
+        await bot.send_message(channel_info, "General VRS Info")
+        await bot.send_message(channel_info, embed=embed)
 
 bot.run(vrs_ids.TOKEN_TESTBOT)

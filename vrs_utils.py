@@ -29,7 +29,8 @@ def info_text():
     embed.add_field(name="What We Do", value=vrs_text.description2, inline=True)
     embed.add_field(name="Contact", value="Email: " + vrs_text.email, inline=True)
     embed.add_field(name="Website", value=vrs_text.website, inline=True)
-    embed.add_field(name="Join Us Formally", value=vrs_text.vrs_join.format(get_poll_link()), inline=True)
+    data = get_poll_link()
+    embed.add_field(name="Join Us Formally", value=vrs_text.vrs_join.format(data[0],data[2]), inline=True)
     embed.add_field(name="Other Resources",value=vrs_text.resources, inline=True)
     return embed
 
@@ -50,12 +51,14 @@ def get_poll_link():
     with open(link_file) as f:
         read_data = f.read()
     f.close()
-    return read_data
+    data = read_data.partition("\n")
+    print("Name = {}\nLink = {}".format(data[0],data[2]))
+    return data
 
 # Modify link for Availability poll (stored in local text file)
-def update_poll_link(new_link):
+def update_poll_link(name, new_link):
     with open(link_file, 'w') as f:
-        f.write(new_link)
+        f.write("{}\n{}".format(name, new_link))
     f.close()
 
 # Decorate stdout to also print to a log file
