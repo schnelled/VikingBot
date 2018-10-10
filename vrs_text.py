@@ -73,4 +73,4 @@ $about ==> Get information about Viking Bot\n\
 $info  ==> Get information about Viking Robotics Society\n"
 
 commands_admin = "\n========__Admin Commands__========\n\
-$linkupdate <new_link> \n==> Update Availability Poll link stored by Viking Bot. Link must start with http\n"
+$linkupdate \"link name\" <new_link> \n==> Update Availability Poll link stored by Viking Bot. Link must start with http://\n"

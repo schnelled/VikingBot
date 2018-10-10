@@ -64,24 +64,16 @@ async def info(ctx):
     embed = vrs_utils.info_text()
     await bot.send_message(ctx.message.channel, embed=embed)
 
-# Deletes two messages from the channel at a time
-#@bot.command(pass_context=True)
-#async def clear(ctx):
-#    msgs = []
-#    async for x in bot.logs_from(ctx.message.channel, limit=2):
-#        msgs.append(x)
-#    await bot.delete_messages(msgs)
-
-
 #=======================================
 # Admin Commands - Only server Admins can use these commands
 #=======================================
 # Update Availability poll link
 @bot.command(pass_context=True)
+@commands.has_role('Admin')
 async def linkupdate(ctx, poll_name, new_link):
     # Update Availability poll link
     vrs_utils.update_poll_link(poll_name, new_link)
-    await bot.send_message(ctx.message.author, "You updated the availability poll link to [{}]({})".format(poll_name,new_link))
+    await bot.send_message(ctx.message.author, "You updated the availability poll link to {} --> {}".format(poll_name,new_link))
     
     # Remove old general info and replace with newer one using new poll link
     msgs = []
