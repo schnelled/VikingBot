@@ -60,7 +60,7 @@ vrs_location = "Portland State University - Intelligent Robotics Lab (FAB70-09)"
 resources = "Viking Robotics [Github](https://github.com/pdx-robotics)\n\
             Website for our [3D Printer](http://roboprint.cecs.pdx.edu/)"
 
-
+meet_desc = "Meetings are in Intelligent Robotics Lab located in Fourth Avenue Building basement level room 70 unless otherwise specified\n-----"
 #=======================================
 # Help Command Text
 #=======================================

@@ -61,8 +61,10 @@ async def about(ctx):
 # Provide information about the club
 @bot.command(pass_context=True)
 async def info(ctx):
-    embed = vrs_utils.info_text()
-    await bot.send_message(ctx.message.channel, embed=embed)
+    gen_info = vrs_utils.gen_info()
+    meetings = vrs_utils.meet_info()
+    await bot.send_message(ctx.message.channel, embed=gen_info)
+    await bot.send_message(ctx.message.channel, embed=meetings)
 
 #=======================================
 # Admin Commands - Only server Admins can use these commands
@@ -77,16 +79,17 @@ async def linkupdate(ctx, poll_name, new_link):
     
     # Remove old general info and replace with newer one using new poll link
     msgs = []
-    channel_info = bot.get_channel(vrs_ids.ID_TEXT_INFO)
+    channel_info = bot.get_channel(vrs_ids.ID_TEXT_GENERAL_INFO)
     if channel_info == None:
-        print("Couldn't find channel with ID {}".format(vrs_ids.ID_TEXT_INFO))
+        print("Couldn't find channel with ID {}".format(vrs_ids.ID_TEXT_GENERAL_INFO))
     else:
         async for x in bot.logs_from(channel_info, limit=2):
             msgs.append(x)
         await bot.delete_messages(msgs) 
 
-        embed = vrs_utils.info_text()
-        await bot.send_message(channel_info, "General VRS Info")
-        await bot.send_message(channel_info, embed=embed)
+        gen_info = vrs_utils.gen_info()
+        meet_info = vrs_utils.meet_info()
+        await bot.send_message(channel_info, embed=gen_info)
+        await bot.send_message(channel_info, embed=meet_info)
 
 bot.run(vrs_ids.TOKEN_TESTBOT)
