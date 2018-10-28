@@ -2,6 +2,12 @@
 This bot will be used to assist officers in managing resources for the club through Discord and provide information to members about the club.
 
 ### Version History
+2018-10-28
+- Fix incorrect channel reference on member_join for greeting people
+
+2018-10-15
+- General Info channel now includes embed for meeting times and tinkering sessions
+
 2018-10-09
 - Fix mention message for when people join the server
 - $linkupdate now removes two newest messages and sends embed in #general_info

@@ -38,7 +38,8 @@ async def on_member_join(member):
     print("First time they joined this server was: {}".format(member.joined_at))
 
     channel_info = bot.get_channel(vrs_ids.ID_TEXT_GENERAL_INFO)
-    await bot.send_message(vrs_ids.ID_TEXT_LOBBY, vrs_text.welcome_text.format(member.mention,channel_info.mention))
+    lobby = bot.get_channel(vrs_ids.ID_TEXT_LOBBY)
+    await bot.send_message(lobby, vrs_text.welcome_text.format(member.mention,channel_info.mention))
 
 #=======================================
 # General Commands - anyone can use these commands
@@ -66,9 +67,29 @@ async def info(ctx):
     await bot.send_message(ctx.message.channel, embed=gen_info)
     await bot.send_message(ctx.message.channel, embed=meetings)
 
+#@bot.command(pass_context=True)
+#async def test(ctx, param, *args):
+    
+
 #=======================================
 # Admin Commands - Only server Admins can use these commands
 #=======================================
+'''
+# Add Tinkering Session Time
+@bot.command(pass_context=True)
+@commands.has_role('Admin')
+async def tinker(ctx, param, *args):
+    if(len(args)<=0):
+        msg = "{} gave param [ {} ] and no arguments".format(ctx.message.author.mention,param)
+    else:
+        listarg = ""
+        for i in args:
+            listarg+="{} ".format(i)
+        msg = "{} gave param [ {} ] and {} arguments: {}".format(ctx.message.author.mention,param,len(args),listarg)
+        
+    await bot.send_message(ctx.message.channel,msg)
+'''    
+
 # Update Availability poll link
 @bot.command(pass_context=True)
 @commands.has_role('Admin')
