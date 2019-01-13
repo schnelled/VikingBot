@@ -21,6 +21,7 @@ def setup():
         os.makedirs(log_dir)
     
     sys.stdout = Logger()
+    sys.stderr = Logger()
 
 # Creates Discord embed with club information
 def gen_info():
