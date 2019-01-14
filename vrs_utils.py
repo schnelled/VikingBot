@@ -4,7 +4,7 @@
 # =====================
 # Custom functions for Viking Bot
 
-import os, sys, datetime
+import os, sys, datetime, logging
 import discord
 from discord.ext import commands
 import vrs_text
@@ -20,7 +20,22 @@ def setup():
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
     
-    sys.stdout = Logger()
+    # Configure the basic logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s:%(levelname)s:%(name)s:%(message)s',
+        filename=log_path + datetime.datetime.now().strftime("discordlog-%Y%m%d-%H%M.log"),
+        filemode='a'
+    )
+
+    # Write standard output to the log file
+    sl = StreamToLogger(logging.getLogger('STDOUT'), logging.INFO)
+    sys.stdout = sl
+
+    # Write standard error to the log file
+    sl = StreamToLogger(logging.getLogger('STDERR'), logging.ERROR)
+    sys.stderr = sl
+
 
 # Creates Discord embed with club information
 def gen_info():
@@ -94,14 +109,15 @@ def n_to_day(n):
 
 
 # Decorate stdout to also print to a log file
-class Logger(object):
-    def __init__(self):
-        self.terminal = sys.stdout
-        self.log = open(log_dir + datetime.datetime.now().strftime("discordlog-%Y%m%d-%H%M.txt"), "a")
+class StreamToLogger(object):
+    def __init__(self, logger, log_level=logging.INFO):
+        self.logger = logger
+        self.log_level = log_level
+        self.linebuf = ''
  
-    def write(self, message):
-        self.terminal.write(message)
-        self.log.write(datetime.datetime.now().strftime("%Y-%m-%d_%H:%M   ")+ message)
+    def write(self, buf):
+        for line in buf.rstrip().splitlines():
+            self.logger.log(self.log_level, line.rstrip())
  
     def flush(self):
         pass
