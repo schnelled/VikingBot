@@ -1,4 +1,4 @@
-#  Title: vrs_classes.py
+# Title: vrs_classes.py
 # Author: Aaron Chan (Chana030102) & Dustin Schnelle (schnelled)
 # Date: 1/24/2019
 #
@@ -45,6 +45,7 @@ class Session(object):
 #               -> update
 #               -> update_file
 # Variables:
+#               -> file:
 #               -> sessions:
 #               -> term:
 #               -> lastupdated:
@@ -54,7 +55,8 @@ class Session(object):
 class Event(object):
     #---------------------------------------------------------------------------
     # Function:     initialize
-    # Input:        -> tinkerfile
+    # Input:        -> tinkerfile - file where the tinker time information is
+    #                   stored.
     # Output:       none
     # Description:  Read the tinkering times from the tinker_times.txt file.
     #               Initialize the sessions array for storing session information.
@@ -62,8 +64,11 @@ class Event(object):
     #               for the sessions.
     #---------------------------------------------------------------------------
     def __init__(self, tinkerfile):
+        # Initialize the tinkering session file
+        self.file = tinkerfile
+
         # Open the file (read only) with tinker time information
-        with open(tinkerfile, 'r') as f:
+        with open(self.file, 'r') as f:
             # Read the tinker time information
             read_data = f.read()
         # Close the file with tinker time information
@@ -72,7 +77,7 @@ class Event(object):
         # Initialize an empty sessions array to store Session objects
         self.sessions = []
         # Use the read tinker time information to initialize the term, time, and
-        # late updated date of the session
+        # last updated date of the session
         self.term, times, self.lastupdated, unused = read_data.split('\n')
         # Spilt the times information for each session during the term
         times = times.split("|")
@@ -92,14 +97,21 @@ class Event(object):
 
         #-----------------------------------------------------------------------
         # Function:     add
-        # Input:        day -
-        #               start -
-        #               end -
-        # Output:
-        # Description:
+        # Input:        day - String representing the day of the week
+        #               start - Starting time of the tinkering session
+        #               end - Ending time of the tinkering session
+        # Output:       none
+        # Description:  Add the new tinkering session into the event class.
         #-----------------------------------------------------------------------
         def add(self, day, start, end):
-            print("Not implemented yet!!!")
+            # Create new instance of a Session object
+            new_session = Session()
+            # Initialize the weekday, starttime and endtime for the session
+            new_session.weekday = day
+            new_session.starttime = starttime
+            new_session.endtime = endtime
+            # Append the current session into the sessions array
+            self.sessions.append(new_session)
 
         #-----------------------------------------------------------------------
         # Function:     remove
