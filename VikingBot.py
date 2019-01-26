@@ -90,7 +90,7 @@ async def on_member_join(member):
     lobby = bot.get_channel(vrs_ids.ID_TEXT_LOBBY)
 
     # Send the greeting message for "new join" to the lobby channel
-    await bot.send_message(lobby, vrs_text.welcome_text.format(member.memtion, general_info.memtion))
+    await bot.send_message(lobby, vrs_text.welcome_text.format(member.mention, general_info.mention))
 
 #===============================================================================
 # General Commands - anyone can use these commands
@@ -157,7 +157,7 @@ async def info(ctx):
 # Update Availability poll link
 @bot.command(pass_context=True)
 async def linkupdate(ctx, term, year, new_link):
-    # Check role of the member for admin
+    # Check role of the member for admin permissions
     if vrs_ids.ID_ADMIN in [x.id for x in ctx.message.author.roles]:
         # Update Availability poll link
         vrs_utils.update_poll_link(term, year, new_link)
@@ -165,7 +165,7 @@ async def linkupdate(ctx, term, year, new_link):
         await bot.send_message(ctx.message.author, "You updated the availability poll link to {} {} --> {}".format(term, year, new_link))
     # Otherwise member is not an admin
     else:
-        # Send message to non-admin that they don't have permission to preform this command
+        # Send permission denied message to non-admin member
         await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
 
     # Remove the old general information and replace with the newer one using new poll link
@@ -194,5 +194,25 @@ async def linkupdate(ctx, term, year, new_link):
         await bot.send_message(general_info, embed=gen_info)
         await bot.send_message(general_info, embed=meetings)
 
+# Add tinker time (tinker_time.txt)
+@bot.command(pass_context=True)
+async def addtinkertime(cxt, day, starttime, endtime):
+    # Check role of the member for admin permissions
+    if vrs_ids.ID_ADMIN in [x.id for x in ctx.message.author.roles]:
+        # Check for valid day of the week
+        if(valid_day(day) == True):
+            # Add the tinkering session to the text file
+            vrs_utils.add_tinker_time(day, starttime, endtime)
+            # Send message to admin member about the successfully added tinker time
+            await bot.send_message(ctx.message.author, "You added a tinker time on {} from {} to {}".format(day, starttime, endtime))
+        # Otherwise invalid day was provided
+        else:
+            # Send message to admin member that the day for the tinker time is not valid
+            await bot.send_message(ctx.message.author, "Error: Invalid day provided please check your spelling")
+    # Otherwise member is not an admin
+    else:
+        # Send permission denied message to non-admin member
+        await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
+
 # Run the discord client
-bot.run(vrs_ids.TOKEN_VIKINGBOT)
+bot.run(vrs_ids.TOKEN_TESTBOT)
