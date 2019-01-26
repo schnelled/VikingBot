@@ -17,8 +17,13 @@
 #                       availability poll.
 #           -> update_poll_link(name, new_link): Update the poll link information
 #                       in the poll_link text file.
+#           -> add_tinker_time(day, starttime, endtime): Adds a tinker time to
+#                       the tinker_time text file.
 #           -> n_to_day(n): Converts a number representing the day of the week
 #                       into the string representation.
+#           -> day_to_n(day): Converts a day of the week (string) to a number
+#                       representing the day.
+#           -> valid_day(day): Checks the validity of the day of the week.
 # Classes:
 #           -> StreamToLogger(object): Class to log messages from standard
 #                       output and standard error.
@@ -182,6 +187,20 @@ def update_poll_link(term, year, new_link):
     print("Poll link has been updated to {} {} --> {}.".format(term, year, new_link))
 
 #-------------------------------------------------------------------------------
+# Function:     add_tinker_time
+# Input:        day - String representing the day of the week
+#               starttime - Starting time of the tinker session (Military time)
+#               endtime - End time of the tinker session (Military time)
+# Output:       None
+# Definition:   Adds a tinker time to the tinker_time text file.
+#-------------------------------------------------------------------------------
+def add_tinker_time(day, starttime, endtime):
+    # Convert the day (string) into it's number representation
+    n = day_to_n(day)
+    # Add the tinkering session to the events class
+    sessions.add(day, starttime, endtime)
+
+#-------------------------------------------------------------------------------
 # Function:     n_to_day
 # Input:        n - the number representing the day of the week
 # Output:       (String) - day of the week
@@ -211,6 +230,70 @@ def n_to_day(n):
     # 6 = Saturday
     else:
         return "Saturday"
+
+#-------------------------------------------------------------------------------
+# Function:     day_to_n
+# Input:        day - String of the day of the week
+# Output:       n - The number representation of the day
+# Definition:   Converts a day of the week (string) to a number representing the
+#               day.
+#-------------------------------------------------------------------------------
+def day_to_n(day):
+    # Convert the string to a number
+    # Sunday = 0
+    if "Sunday" or "sunday":
+        return 0
+    # Monday = 1
+    elif "Monday" or "monday":
+        return 1
+    # Tuesday = 2
+    elif "Tuesday" or "tuesday":
+        return 2
+    # Wednesday = 3
+    elif "Wednesday" or "wednesday":
+        return 3
+    # Thursday = 4
+    elif "Thursday" or "thursday":
+        return 4
+    # Friday = 5
+    elif "Friday" or "friday":
+        return 5
+    # Saturday = 6
+    else:
+        return 6
+
+#-------------------------------------------------------------------------------
+# Function:     valid_day
+# Input:        day - String representing the day of the week
+# Output:       Boolean value for whether the day is valid
+# Definition:   Checks the validity of the day of the week.
+#-------------------------------------------------------------------------------
+def valid_day(day):
+    # Check if the day of the week is valid
+    # Sunday is valid
+    if "Sunday" or "sunday":
+        return True
+    # Monday is valid
+    elif "Monday" or "monday":
+        return True
+    # Tuesday is valid
+    elif "Tuesday" or "tuesday":
+        return True
+    # Wednesday is valid
+    elif "Wednesday" or "wednesday":
+        return True
+    # Thursday is valid
+    elif "Thursday" or "thursday":
+        return True
+    # Friday is valid
+    elif "Friday" or "friday":
+        return True
+    # Saturday is valid
+    elif "Saturday" or "saturday":
+        return True
+    # Not valid day of the week
+    else:
+        return False
 
 #-------------------------------------------------------------------------------
 # Class:        StreamToLogger
