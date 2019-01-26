@@ -12,6 +12,8 @@
 #           -> Event(object):   The Event object is a method of managing all of
 #                               the sessions during the current term.
 
+import datetime
+
 #-------------------------------------------------------------------------------
 # Class:        Session
 # Methods:
@@ -43,7 +45,6 @@ class Session(object):
 #               -> remove
 #               -> display
 #               -> update
-#               -> update_file
 # Variables:
 #               -> file:
 #               -> sessions:
@@ -95,56 +96,80 @@ class Event(object):
             # Append the current session into the sessions array
             self.sessions.append(new_session)
 
-        #-----------------------------------------------------------------------
-        # Function:     add
-        # Input:        day - String representing the day of the week
-        #               start - Starting time of the tinkering session
-        #               end - Ending time of the tinkering session
-        # Output:       none
-        # Description:  Add the new tinkering session into the event class.
-        #-----------------------------------------------------------------------
-        def add(self, day, start, end):
-            # Create new instance of a Session object
-            new_session = Session()
-            # Initialize the weekday, starttime and endtime for the session
-            new_session.weekday = day
-            new_session.starttime = starttime
-            new_session.endtime = endtime
-            # Append the current session into the sessions array
-            self.sessions.append(new_session)
+    #---------------------------------------------------------------------------
+    # Function:     add
+    # Input:        day - String representing the day of the week
+    #               start - Starting time of the tinkering session
+    #               end - Ending time of the tinkering session
+    # Output:       none
+    # Description:  Add the new tinkering session into the event class.
+    #---------------------------------------------------------------------------
+    def add(self, day, start, end):
+        # Open the file (read only) with tinker time information
+        with open(self.file, 'r') as f:
+            # Read the tinker time information
+            read_data = f.read()
+        # Close the tinker time text file
+        f.close()
 
-        #-----------------------------------------------------------------------
-        # Function:     remove
-        # Input:        index -
-        # Output:
-        # Description:
-        #-----------------------------------------------------------------------
-        def remove(self, index):
-            print("Not implemented yet!!!")
+        # Create new instance of a Session object
+        new_session = Session()
+        # Initialize the weekday, starttime and endtime for the session
+        new_session.weekday = day
+        new_session.starttime = start
+        new_session.endtime = end
+        # Append the current session into the sessions array
+        self.sessions.append(new_session)
 
-        #-----------------------------------------------------------------------
-        # Function:     display
-        # Input:
-        # Output:
-        # Description:
-        #-----------------------------------------------------------------------
-        def display(self):
-            print("Not implemented yet!!!")
+        # Information to be added to the file
+        add = '|' + day + ',' + start + ',' + end
+        print(add)
+        # Use the read tinker time information to initialize the term, time, and
+        # last updated date of the session
+        self.term, times, self.lastupdated, unused = read_data.split('\n')
+        # Add the new tinker time
+        times += add
 
-        #-----------------------------------------------------------------------
-        # Function:     update
-        # Input:
-        # Output:
-        # Description:
-        #-----------------------------------------------------------------------
-        def update(self):
-            print("Not implemented yet!!!")
+        # Update the last modification date and time
+        self.lastupdated = self.update()
 
-        #-----------------------------------------------------------------------
-        # Function:     update_file
-        # Input:
-        # Output:
-        # Description:
-        #-----------------------------------------------------------------------
-        def update_file(self):
-            print("Not implemented yet!!!")
+        # Open the tinker time text file for writing
+        with open(self.file, 'w+') as f:
+            # Write to the tinker time text file
+            f.write("{}\n{}\n{}\n".format(self.term, times, self.lastupdated))
+        # Close the tinker time text file
+        f.close()
+
+    #---------------------------------------------------------------------------
+    # Function:     remove
+    # Input:        index -
+    # Output:
+    # Description:
+    #---------------------------------------------------------------------------
+    def remove(self, index):
+        print("Not implemented yet!!!")
+
+    #---------------------------------------------------------------------------
+    # Function:     display
+    # Input:
+    # Output:
+    # Description:
+    #---------------------------------------------------------------------------
+    def display(self):
+        print("Not implemented yet!!!")
+
+    #---------------------------------------------------------------------------
+    # Function:     update_file
+    # Input:        none
+    # Output:       String with current date and time
+    # Description:  Produce an updated date and time string to be written to the
+    #               file.
+    #---------------------------------------------------------------------------
+    def update(self):
+        # Update the last modification date and time
+        year = datetime.datetime.today().year
+        month = datetime.datetime.today().month
+        date = datetime.datetime.today().day
+        hour = datetime.datetime.now().hour
+        min = datetime.datetime.now().minute
+        return str(year) + '-' + str(month) + '-' + str(date) + ' ' + str(hour) + ':' + str(min)

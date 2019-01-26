@@ -86,8 +86,8 @@ async def on_member_join(member):
     print("First time they joined this server was: {}".format(member.joined_at))
 
     # Obtain the general_info and lobby channel ids for greeting message
-    general_info = bot.get_channel(vrs_ids.ID_TEXT_GENERAL_INFO)
-    lobby = bot.get_channel(vrs_ids.ID_TEXT_LOBBY)
+    general_info = bot.get_channel(vrs_ids.SL_TEXT_GENERAL_INFO)
+    lobby = bot.get_channel(vrs_ids.SL_TEXT_LOBBY)
 
     # Send the greeting message for "new join" to the lobby channel
     await bot.send_message(lobby, vrs_text.welcome_text.format(member.mention, general_info.mention))
@@ -172,12 +172,12 @@ async def linkupdate(ctx, term, year, new_link):
     # Create an empty character array (string)
     msgs = []
     # Obtain the general information channel id
-    general_info = bot.get_channel(vrs_ids.ID_TEXT_GENERAL_INFO)
+    general_info = bot.get_channel(vrs_ids.SL_TEXT_GENERAL_INFO)
 
     # Check if the channel id was obtained
     if general_info == None:
         # Display message that the channel couldn't be found
-        print("Couldn't find channel with ID {}".format(vrs_ids.ID_TEXT_GENERAL_INFO))
+        print("Couldn't find channel with ID {}".format(vrs_ids.SL_TEXT_GENERAL_INFO))
     else:
         # Obtain the old message to be deleted
         async for y in bot.logs_from(general_info, limit=2):
@@ -196,15 +196,15 @@ async def linkupdate(ctx, term, year, new_link):
 
 # Add tinker time (tinker_time.txt)
 @bot.command(pass_context=True)
-async def addtinkertime(cxt, day, starttime, endtime):
+async def addtinkertime(ctx, day, starttime, endtime):
     # Check role of the member for admin permissions
-    if vrs_ids.ID_ADMIN in [x.id for x in ctx.message.author.roles]:
+    if vrs_ids.SL_ADMIN in [x.id for x in ctx.message.author.roles]:
         # Check for valid day of the week
-        if(valid_day(day) == True):
+        if(vrs_utils.valid_day(day) == True):
             # Add the tinkering session to the text file
             vrs_utils.add_tinker_time(day, starttime, endtime)
             # Send message to admin member about the successfully added tinker time
-            await bot.send_message(ctx.message.author, "You added a tinker time on {} from {} to {}".format(day, starttime, endtime))
+            await bot.send_message(ctx.message.author, "You added a tinker time on {} from {} to {}".format(day, vrs_utils.setuptime(starttime), vrs_utils.setuptime(endtime)))
         # Otherwise invalid day was provided
         else:
             # Send message to admin member that the day for the tinker time is not valid
@@ -215,4 +215,4 @@ async def addtinkertime(cxt, day, starttime, endtime):
         await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
 
 # Run the discord client
-bot.run(vrs_ids.TOKEN_TESTBOT)
+bot.run(vrs_ids.WALL_E)
