@@ -37,20 +37,6 @@ import vrs_text
 # Initial setup of the Discord chat bot
 #===============================================================================
 
-# Setup the logging of errors and print statements to log file
-vrs_utils.setup()
-# Create an instance of a discord bot
-bot = commands.Bot(command_prefix=vrs_ids.BOT_PREFIX)
-# Remove defualt help command
-bot.remove_command('help')
-
-# VikingBot startup message
-print("\n------\n")
-print(vrs_text.ASCII_ART)
-print("\n------\n")
-print("\nDiscord version: {}".format(discord.__version__))
-print("\n------\n")
-
 # Check for mode argument
 if len(sys.argv) != 2:
     # Display usage error
@@ -81,6 +67,20 @@ else:
     # Display usage error
     print("Usage Error: invalid mode\n\t-t (test mode)\n\t-r (run mode)")
     sys.exit(0)
+
+# Setup the logging of errors and print statements to log file
+vrs_utils.setup()
+# Create an instance of a discord bot
+bot = commands.Bot(command_prefix=vrs_ids.BOT_PREFIX)
+# Remove defualt help command
+bot.remove_command('help')
+
+# VikingBot startup message
+print("\n------\n")
+print(vrs_text.ASCII_ART)
+print("\n------\n")
+print("\nDiscord version: {}".format(discord.__version__))
+print("\n------\n")
 
 #===============================================================================
 # General events
