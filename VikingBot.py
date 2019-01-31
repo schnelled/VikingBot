@@ -246,4 +246,4 @@ async def addtinkertime(ctx, day, starttime, endtime):
         await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
 
 # Run the discord client
-bot.run(vrs_ids.WALL_E)
+bot.run(token)
