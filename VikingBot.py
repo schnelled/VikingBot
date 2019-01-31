@@ -26,7 +26,7 @@
 #
 #===============================================================================
 
-import discord
+import discord, sys
 from discord.ext import commands
 
 import vrs_utils
@@ -34,7 +34,7 @@ import vrs_ids
 import vrs_text
 
 #===============================================================================
-# Initial setup
+# Initial setup of the Discord chat bot
 #===============================================================================
 
 # Setup the logging of errors and print statements to log file
@@ -50,6 +50,37 @@ print(vrs_text.ASCII_ART)
 print("\n------\n")
 print("\nDiscord version: {}".format(discord.__version__))
 print("\n------\n")
+
+# Check for mode argument
+if len(sys.argv) != 2:
+    # Display usage error
+    print("Usage Error: python3.6 VikingBot.py -mode")
+    # Exit the program
+    sys.exit(0)
+
+# Check if the Discord bot is in 'test' mode
+if sys.argv[1] == '-t':
+    # Initialize bot token for test server
+    token = vrs_ids.TOKEN_TESTBOT
+    # Initialize admin id for the test server
+    admin_id = vrs_ids.ID_ADMIN_TEST
+    # Initialize the used channel ids for the test server
+    general_info_id = vrs_ids.ID_TEXT_GENERAL_INFO_TEST
+    lobby_id = vrs_ids.ID_TEXT_LOBBY_TEST
+# Check if the Discord bot is in 'run' mode
+elif sys.argv[1] == '-r':
+    # Initialize bot token for assisting Viking Robotics Society server
+    token = vrs_ids.TOKEN_VIKINGBOT
+    # Initialize admin id for the Viking Robotics Society server
+    admin_id = vrs_ids.ID_ADMIN
+    # Initialize the used channel ids for the Viking Robotics Society server
+    general_info_id = vrs_ids.ID_TEXT_GENERAL_INFO
+    lobby_id = vrs_ids.ID_TEXT_LOBBY
+# Otherwise invalid argument provided
+else:
+    # Display usage error
+    print("Usage Error: invalid mode\n\t-t (test mode)\n\t-r (run mode)")
+    sys.exit(0)
 
 #===============================================================================
 # General events
@@ -86,8 +117,8 @@ async def on_member_join(member):
     print("First time they joined this server was: {}".format(member.joined_at))
 
     # Obtain the general_info and lobby channel ids for greeting message
-    general_info = bot.get_channel(vrs_ids.SL_TEXT_GENERAL_INFO)
-    lobby = bot.get_channel(vrs_ids.SL_TEXT_LOBBY)
+    general_info = bot.get_channel(general_info_id)
+    lobby = bot.get_channel(lobby_id)
 
     # Send the greeting message for "new join" to the lobby channel
     await bot.send_message(lobby, vrs_text.welcome_text.format(member.mention, general_info.mention))
@@ -158,7 +189,7 @@ async def info(ctx):
 @bot.command(pass_context=True)
 async def linkupdate(ctx, term, year, new_link):
     # Check role of the member for admin permissions
-    if vrs_ids.ID_ADMIN in [x.id for x in ctx.message.author.roles]:
+    if admin_id in [x.id for x in ctx.message.author.roles]:
         # Update Availability poll link
         vrs_utils.update_poll_link(term, year, new_link)
         # Send message to admin member about update success
@@ -172,12 +203,12 @@ async def linkupdate(ctx, term, year, new_link):
     # Create an empty character array (string)
     msgs = []
     # Obtain the general information channel id
-    general_info = bot.get_channel(vrs_ids.SL_TEXT_GENERAL_INFO)
+    general_info = bot.get_channel(general_info_id)
 
     # Check if the channel id was obtained
     if general_info == None:
         # Display message that the channel couldn't be found
-        print("Couldn't find channel with ID {}".format(vrs_ids.SL_TEXT_GENERAL_INFO))
+        print("Couldn't find channel with ID {}".format(general_info_id))
     else:
         # Obtain the old message to be deleted
         async for y in bot.logs_from(general_info, limit=2):
@@ -198,7 +229,7 @@ async def linkupdate(ctx, term, year, new_link):
 @bot.command(pass_context=True)
 async def addtinkertime(ctx, day, starttime, endtime):
     # Check role of the member for admin permissions
-    if vrs_ids.SL_ADMIN in [x.id for x in ctx.message.author.roles]:
+    if admin_id in [x.id for x in ctx.message.author.roles]:
         # Check for valid day of the week
         if(vrs_utils.valid_day(day) == True):
             # Add the tinkering session to the text file
