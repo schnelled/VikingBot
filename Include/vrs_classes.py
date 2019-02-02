@@ -112,6 +112,31 @@ class Event(object):
         # Close the tinker time text file
         f.close()
 
+        # Information to be added to the file
+        add = '|' + day + ',' + start + ',' + end
+        # Use the read tinker time information to initialize the term, time, and
+        # last updated date of the session
+        self.term, times, self.lastupdated, unused = read_data.split('\n')
+        # Spilt the times information for each session during the term
+        times = times.split("|")
+
+        # Loop for the number of sessions (tinker times)
+        for i in range(0,len(times)):
+            # Spilt the information for the session time
+            data = times[i].split(",")
+            # Check if the new date is less than the current date in the times array
+            if(int(data[0]) <= int(day)):
+                print("Less than")
+                # Check if new date is equal to current date in times array
+                if(int(data[0]) == int(day)):
+                    print("Equal")
+            #Otherwise the new date is greater then the current date in the time array
+            else:
+                print("Greater than")
+
+        # Update the last modification date and time
+        self.lastupdated = self.update()
+
         # Create new instance of a Session object
         new_session = Session()
         # Initialize the weekday, starttime and endtime for the session
@@ -120,18 +145,6 @@ class Event(object):
         new_session.endtime = end
         # Append the current session into the sessions array
         self.sessions.append(new_session)
-
-        # Information to be added to the file
-        add = '|' + day + ',' + start + ',' + end
-        print(add)
-        # Use the read tinker time information to initialize the term, time, and
-        # last updated date of the session
-        self.term, times, self.lastupdated, unused = read_data.split('\n')
-        # Add the new tinker time
-        times += add
-
-        # Update the last modification date and time
-        self.lastupdated = self.update()
 
         # Open the tinker time text file for writing
         with open(self.file, 'w+') as f:
