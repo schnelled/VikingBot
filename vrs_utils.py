@@ -37,6 +37,7 @@ import os, sys, datetime, logging
 import discord
 
 import vrs_text
+sys.path.insert(0, './Include/')
 import vrs_classes
 
 # Obtain the current directory path
