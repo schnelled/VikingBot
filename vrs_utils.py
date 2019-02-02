@@ -37,6 +37,7 @@ import os, sys, datetime, logging
 import discord
 
 import vrs_text
+sys.path.insert(0, './Include/')
 import vrs_classes
 
 # Obtain the current directory path
@@ -44,9 +45,9 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 # Directory for the log path
 log_path = dir_path + "/log/"
 # Directory for the availability poll link
-link_poll = dir_path + "/poll_link.txt"
+link_poll = dir_path + "/Text/poll_link.txt"
 # Directory for the tinkering session times
-tinkerfile = dir_path + "/tinker_times.txt"
+tinkerfile = dir_path + "/Text/tinker_times.txt"
 
 #-------------------------------------------------------------------------------
 # Function:     setup
