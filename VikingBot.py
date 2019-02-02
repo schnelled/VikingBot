@@ -226,24 +226,24 @@ async def linkupdate(ctx, term, year, new_link):
         await bot.send_message(general_info, embed=meetings)
 
 # Add tinker time (tinker_time.txt)
-@bot.command(pass_context=True)
-async def addtinkertime(ctx, day, starttime, endtime):
-    # Check role of the member for admin permissions
-    if admin_id in [x.id for x in ctx.message.author.roles]:
-        # Check for valid day of the week
-        if(vrs_utils.valid_day(day) == True):
-            # Add the tinkering session to the text file
-            vrs_utils.add_tinker_time(day, starttime, endtime)
-            # Send message to admin member about the successfully added tinker time
-            await bot.send_message(ctx.message.author, "You added a tinker time on {} from {} to {}".format(day, vrs_utils.setuptime(starttime), vrs_utils.setuptime(endtime)))
-        # Otherwise invalid day was provided
-        else:
-            # Send message to admin member that the day for the tinker time is not valid
-            await bot.send_message(ctx.message.author, "Error: Invalid day provided please check your spelling")
-    # Otherwise member is not an admin
-    else:
-        # Send permission denied message to non-admin member
-        await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
+#@bot.command(pass_context=True)
+#async def addtinkertime(ctx, day, starttime, endtime):
+#    # Check role of the member for admin permissions
+#    if admin_id in [x.id for x in ctx.message.author.roles]:
+#        # Check for valid day of the week
+#        if(vrs_utils.valid_day(day) == True):
+#            # Add the tinkering session to the text file
+#            vrs_utils.add_tinker_time(day, starttime, endtime)
+#            # Send message to admin member about the successfully added tinker time
+#            await bot.send_message(ctx.message.author, "You added a tinker time on {} from {} to {}".format(day, vrs_utils.setuptime(starttime), vrs_utils.setuptime(endtime)))
+#        # Otherwise invalid day was provided
+#        else:
+#            # Send message to admin member that the day for the tinker time is not valid
+#            await bot.send_message(ctx.message.author, "Error: Invalid day provided please check your spelling")
+#    # Otherwise member is not an admin
+#    else:
+#        # Send permission denied message to non-admin member
+#        await bot.send_message(ctx.message.author, "You can't preform this command. Admin permission needed.")
 
 # Run the discord client
 bot.run(token)
