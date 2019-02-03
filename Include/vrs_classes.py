@@ -12,7 +12,7 @@
 #           -> Event(object):   The Event object is a method of managing all of
 #                               the sessions during the current term.
 
-import datetime
+import datetime, os
 
 #-------------------------------------------------------------------------------
 # Class:        Session
@@ -155,12 +155,60 @@ class Event(object):
 
     #---------------------------------------------------------------------------
     # Function:     remove
-    # Input:        index -
-    # Output:
-    # Description:
+    # Input:        day - The day of the session to be removed
+    #               start - The start time of the session to be removed
+    #               end - The end time of the session to be removed
+    # Output:       none
+    # Description:  Removes a current tinkering session from the event class.
     #---------------------------------------------------------------------------
-    def remove(self, index):
-        print("Not implemented yet!!!")
+    def remove(self, day, start, end):
+        # Session time to be removed
+        toRemove = day + ',' + start + ',' + end
+
+        # Open the file (read only) with tinker time information
+        with open(self.file, 'r') as f:
+            # Read the tinker time information
+            read_data = f.read()
+        # Close the tinker time text file
+        f.close()
+
+        # Use the read tinker time information to initialize the term, time, and
+        # last updated date of the session
+        self.term, times, self.lastupdated, unused = read_data.split('\n')
+        # Spilt the times information for each session during the term
+        times = times.split("|")
+
+        # Initialize the index
+        i = 0
+        # Loop for the number of sessions (tinker times) in the list of strings
+        while i < len(times):
+            # Check for the matching session string to be removed
+            if times[i] == toRemove:
+                # Display information about the deleted section
+                print("Deleting {},{},{} from tinker_time.txt".format(day, start, end))
+                # Remove the specified session from the list of session strings
+                del times[i]
+            else:
+                # Increment the index
+                i += 1
+
+        # Loop for the number of sessions (tinker times) in the list of session objects
+        for i, o in enumerate(self.sessions):
+            # Check for matching session object to be removed
+            if o.weekday == day and o.starttime == start and o.endtime == end:
+                # Remove the specified session from the list of session objects
+                del self.sessions[i]
+                break
+
+        # Transform the list of times into a times string
+        times = '|'.join(times)
+
+        # Open the tinker time text file for writing
+        with open(self.file, 'w+') as f:
+            # Write to the tinker time text file
+            f.write("{}\n{}\n{}\n".format(self.term, times, self.lastupdated))
+        # Close the tinker time text file
+        f.close()
 
     #---------------------------------------------------------------------------
     # Function:     display
@@ -186,3 +234,46 @@ class Event(object):
         hour = datetime.datetime.now().hour
         min = datetime.datetime.now().minute
         return str(year) + '-' + str(month) + '-' + str(date) + ' ' + str(hour) + ':' + str(min)
+
+#-------------------------------------------------------------------------------
+# Function:     testClasses
+# Input:        none
+# Output:       none
+# Description:  Test the functionality of the classes, so new methods can be
+#               fully tested before being added to the VRS Discord server.
+#-------------------------------------------------------------------------------
+def testClasses():
+    # Obtain current working directory
+    testDir = os.getcwd()
+    # Modify the directory
+    testDir = testDir.replace("Include", "Test/tinker_times.txt")
+
+    # Initialize instance for testings events
+    testEvent = Event(testDir)
+
+    # Exaustive test of the add/remove feature without time conflicts
+    # Remove Sunday(0) session
+    testEvent.remove('0','12:00','16:00')
+    # Add Sunday(0) session
+    # Remove Monday(1) session
+    testEvent.remove('1','12:00','16:00')
+    # Add Monday(1) session
+    # Remove Tuesday(2) session
+    testEvent.remove('2','12:00','16:00')
+    # Add Tuesday(2) session
+    # Remove Wednesday(3) session
+    testEvent.remove('3','12:00','16:00')
+    # Add Wednesday(3) session
+    # Remove Thursday(4) session
+    testEvent.remove('4','12:00','16:00')
+    # Add Thursday(4) session
+    # Remove Friday(5) session
+    testEvent.remove('5','12:00','16:00')
+    # Add Friday(5) session
+    # Remove Saturday(6) session
+    testEvent.remove('6','12:00','16:00')
+    # Add Saturday(6) session
+
+# If classes is run as a script then run the test case
+if __name__ == '__main__':
+    testClasses()
