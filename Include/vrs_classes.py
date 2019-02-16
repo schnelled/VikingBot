@@ -123,7 +123,7 @@ class Event(object):
             # Initialize the times variable with the first tinker time
             times = day + ',' + start + ',' + end
             # Display information about the added section
-            print("Adding {},{},{} to tinker_time.txt".format(day, start, end))
+            print("Added {},{},{} to tinker_time.txt".format(day, start, end))
         # Otherwise session(s) already exist
         else:
             # Loop for the number of sessions (tinker times)
@@ -138,7 +138,7 @@ class Event(object):
                     # Add the session to the sessions list
                     self.addSession(day, start, end)
                     # Display information about the added section
-                    print("Adding {},{},{} to tinker_time.txt".format(day, start, end))
+                    print("Added {},{},{} to tinker_time.txt".format(day, start, end))
                     # Join the times array into a single times string
                     times = '|'.join(times)
                     break
@@ -158,7 +158,7 @@ class Event(object):
                         # Add the session to the sessions list
                         self.addSession(day, start, end)
                         # Display information about the added section
-                        print("Adding {},{},{} to tinker_time.txt".format(day, start, end))
+                        print("Added {},{},{} to tinker_time.txt".format(day, start, end))
                         # Join the times array into a single times string
                         times = '|'.join(times)
                         break
@@ -174,7 +174,7 @@ class Event(object):
                     # Insert the added entry to current location
                     times.append(day + ',' + start + ',' + end)
                     # Display information about the added section
-                    print("Adding {},{},{} to tinker_time.txt".format(day, start, end))
+                    print("Added {},{},{} to tinker_time.txt".format(day, start, end))
                     # Add the session to the sessions list
                     self.addSession(day, start, end)
                     # Join the times array into a single times string
@@ -226,7 +226,7 @@ class Event(object):
             # Check for the matching session string to be removed
             if times[i] == toRemove:
                 # Display information about the deleted section
-                print("Deleting {},{},{} from tinker_time.txt".format(day, start, end))
+                print("Deleted {},{},{} from tinker_time.txt".format(day, start, end))
                 # Remove the specified session from the list of session strings
                 del times[i]
             else:
