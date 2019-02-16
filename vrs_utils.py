@@ -82,18 +82,28 @@ def setup():
 
 #-------------------------------------------------------------------------------
 # Function:     help
-# Input:        None
+# Input:        -> admin - Boolean value (True if member is an admin)
 # Output:       text - the text output for the help command
-# Decription:   Creates command descriptions for the test bot.
+# Decription:   Creates command descriptions for the discord bot.
 #-------------------------------------------------------------------------------
-def help():
-    # Create the text message for command descriptions
-    text = vrs_text.code_mark
-    text = text + vrs_text.commands_header
-    text = text + vrs_text.help_text
-    text = text + vrs_text.commands_admin
-    text = text + vrs_text.code_mark
-    return text
+def help(admin):
+    # Check for admin status
+    if admin:
+        # Create the text message for command descriptions
+        text = vrs_text.code_mark
+        text = text + vrs_text.commands_header
+        text = text + vrs_text.help_text
+        text = text + vrs_text.commands_admin
+        text = text + vrs_text.code_mark
+        return text
+    # Otherwise not an admin
+    else:
+        # Create the text message for command descriptions
+        text = vrs_text.code_mark
+        text = text + vrs_text.commands_header
+        text = text + vrs_text.help_text
+        text = text + vrs_text.code_mark
+        return text
 
 #-------------------------------------------------------------------------------
 # Function:     about

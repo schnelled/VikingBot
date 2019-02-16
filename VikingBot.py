@@ -149,8 +149,14 @@ async def ping(ctx):
 # Display all of the supported commands
 @bot.command(pass_context=True)
 async def help(ctx):
-    # Sends a list of the commands supported to the channel
-    await bot.send_message(ctx.message.channel, vrs_utils.help())
+    # Check for admin member(role)
+    if admin_id in [x.id for x in ctx.message.author.roles]:
+        # Sends a list of all commands supported to the channel
+        await bot.send_message(ctx.message.channel, vrs_utils.help(True))
+    # Otherwise not admin member(role)
+    else:
+        # Send a list of basic commands supported to the channel
+        await bot.send_message(ctx.message.channel, vrs_utils.help(False))
 
 # Information about the bot itself
 @bot.command(pass_context=True)
@@ -255,7 +261,7 @@ async def removetinkertime(ctx, day, startTime, endTime):
             # Add the tinkering session to the text file
             vrs_utils.remove_tinker_time(day, startTime, endTime)
             # Send message to admin member about the successfully removed tinker time
-            await bot.send_message(ctx.message.author, "You remove the tinker time on {} from {} to {}".format(day, vrs_utils.setup_time(startTime), vrs_utils.setup_time(endTime)))
+            await bot.send_message(ctx.message.author, "You removed the tinker time on {} from {} to {}".format(day, vrs_utils.setup_time(startTime), vrs_utils.setup_time(endTime)))
         # Otherwise invalid day was provided
         else:
             # Send message to admin member that the day for the tinker time is not valid
